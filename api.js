@@ -18,7 +18,7 @@ exports.ctrl = function (mess, func) {
   }else if(mess.route == 'news'){
     if (mess.ctrl == 'get') {
       var row = [];
-      var sql = "SELECT * FROM news";
+      var sql = "SELECT * FROM news ORDER BY id DESC";
       connection.query(sql, function(err, rows, fields){
           if(err) return console.log(err);
           for (var i = 0; i < rows.length; i++) {
@@ -49,8 +49,37 @@ exports.ctrl = function (mess, func) {
           };
           func(ansver);
       });
+    }else if (mess.ctrl == 'del') {
+      var sql = "DELETE FROM news WHERE id = "+mess.id+"";
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : "removed news"
+          };
+          func(ansver);
+      });
+    }else if (mess.ctrl == 'get_one') {
+      var sql = "SELECT * FROM news WHERE id = "+mess.id+" LIMIT 1";
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : rows
+          };
+          func(ansver);
+      });
+    }else if (mess.ctrl == 'set') {
+      var sql = "UPDATE news SET title = '"+mess.title+"', photo = '"+mess.photo+"', body = '"+mess.body+"' WHERE id = "+mess.id;
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : rows
+          };
+          func(ansver);
+      });
     }
-
   }else if (mess.route == 'tree') {
     if (mess.ctrl == 'get') {
       var sql = "SELECT * FROM my_tree ORDER BY left_key";
@@ -98,6 +127,26 @@ exports.ctrl = function (mess, func) {
                   func(ansver);
               });
           });
+      });
+    }else if (mess.ctrl == 'get_one') {
+      var sql = "SELECT * FROM my_tree WHERE id = "+mess.id+" LIMIT 1";
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : rows
+          };
+          func(ansver);
+      });
+    }else if (mess.ctrl == 'set') {
+      var sql = "UPDATE my_tree SET name = '"+mess.name+"', photo = '"+mess.photo+"', ip_adress = '"+mess.ip+"', type = '"+mess.type+"', status = '"+mess.status+"' WHERE id = "+mess.id;
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : rows
+          };
+          func(ansver);
       });
     }
   }else if (mess.route == 'signup') {

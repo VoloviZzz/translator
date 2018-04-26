@@ -5,7 +5,6 @@ $(document).ready(function () {
     	"token":"1234",
       "ctrl":"get",
       "route":"news"
-      // "phone": $('#phone').text()
     }
   };
   $.ajax({
@@ -26,7 +25,7 @@ $(document).ready(function () {
               str += '      <img src="'+data.ansver[i].photo+'">';
               str += '    </li>';
               str += '    <li class="body-small">';
-              str += '      <small>'+data.ansver[i].body.substr(0, 130)+'... </small>';
+              str += '      <small>'+data.ansver[i].body.split('</abz>')[0].substr(0, 25)+'... </small>';
               str += '    </li>';
               str += '    <li class="body-full" style="display:none">';
               str += '      <small></small>';
@@ -34,12 +33,40 @@ $(document).ready(function () {
               str += '  </ul>';
               str += '</div>';
           $('#news').append(str);
-          $('#new'+data.ansver[i].id).find('.body-full small').html(data.ansver[i].body);
-          // $('#new'+data.ansver[i].id).find('.body-full small').html(convert_body(data.ansver[i].body));
+          var str = ' <a class="btn btn-success btn-block edit" href="edit_news/'+data.ansver[i].id+'">edit</a>';
+              str += '<div class="btn btn-primary delete btn-block" data-id="'+data.ansver[i].id+'">delete</div> <br>';
+          $('#new'+data.ansver[i].id).find('.body-full small').html(data.ansver[i].body + str);
         }
-        $('.form-news').click(function () {
-          $(this).find('.body-small').toggle();
-          $(this).find('.body-full').toggle();
+        $('.delete').click(function (e) {
+          console.log(e);
+          var id = $(this).data('id');
+          var api = {
+            "api": {
+            	"token":"1234",
+              "ctrl":"del",
+              "route":"news",
+              "id": id
+            }
+          };
+          var btn = $(this).parent().parent().parent();
+          $.ajax({
+            type: "POST",
+            url: "/api",
+            data: JSON.stringify(api),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data){
+                console.log(data);
+                // console.log(this);
+                btn.hide(500, function () {
+                  btn.remove();
+                });
+                }
+            });
+        })
+        $('.form-news li').find('img').click(function () {
+          $(this).parent().parent().find('.body-small').toggle(250);
+          $(this).parent().parent().find('.body-full').toggle(250);
           console.log('click');
         });
       }

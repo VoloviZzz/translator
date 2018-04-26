@@ -42,10 +42,17 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/:params/:phone', function (req, res, next) {
-  res.render('index0',{
-    content:req.params["params"],
-    phone: req.params["phone"]
-  });
+  console.log(req.session);
+  if (req.session.auth == true) {
+    res.render('index0',{
+      content:req.params["params"],
+      phone: req.params["phone"]
+    });
+  }else {
+    res.render('logged',{
+      content:'login'
+    });
+  }
 });
 
 app.get('/:params', function (req, res, next) {
