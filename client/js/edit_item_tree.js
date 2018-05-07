@@ -47,7 +47,7 @@ $(document).ready(function(){
         "route":"tree",
         "name":$('#name').val(),
         "photo":$('#first_photo').attr('src'),
-        "ip": $('#name').val(),
+        "ip": $('#ip').val(),
         "type":$("#type option:selected").val(),
         "status":$("#status option:selected").val(),
         "id":id

@@ -30,7 +30,7 @@ $(document).ready(function () {
         "api": {
         	"token":"1234",
           "ctrl":"add",
-          "route":"signup",
+          "route":"signup_admin",
           "email":$('#email').val(),
           "surname":$('#surname').val(),
           "name":$('#name').val(),

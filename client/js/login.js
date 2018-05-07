@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $('#username').focus();
   $('#login').click(function () {
     var pass = $('#password').val();
     var user = $('#username').val();
@@ -7,7 +8,7 @@ $(document).ready(function () {
       "api": {
         "token":"1234",
         "ctrl":"login",
-        "route":"signup",
+        "route":"signup_admin",
         "phone": user,
         "password":pass
       }

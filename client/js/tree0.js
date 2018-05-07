@@ -23,77 +23,17 @@ $(document).ready(function () {
         }
       };
       for (var i = 0; i < tmp.length; i++) {
-        var str = '<div class="form-group dropdown">';
+        var str = '<div class="form-group">';
         for (var j = 0; j < tmp[i].level-1; j++) {
           str += '<div class="btn btn-success"></div>';
         };
         str += '<a href="/edit_item_tree/'+tmp[i].id+'" class="btn btn-success">'+tmp[i].name+'</a>';
-        if (tmp[i].level < 4) {
-          str += '<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">';
-          str += '  <span class="caret"></span>';
-          str += '  <span class="sr-only">Toggle Dropdown</span>';
-          str += '</button>';
-          str += '<ul class="dropdown-menu dropdown-menu-right">';
-          if (tmp[i].level == 3) {
-            str += '  <li><a class="add" data-rkey="'+tmp[i].right_key+'" data-lvl="'+tmp[i].level+'" data-lkey="'+tmp[i].left_key+'">Добавить город</a></li>';
-          }else {
-            str += '  <li><a class="add" data-rkey="'+tmp[i].right_key+'" data-lvl="'+tmp[i].level+'" data-lkey="'+tmp[i].left_key+'">Добавить ветку</a></li>';
-          }
-          str += '  <li><a class="remove" data-rkey="'+tmp[i].right_key+'" data-lkey="'+tmp[i].left_key+'">Удалить ветку</a></li>';
-          str += '</ul>';
-        }
-        else {
-          str += '<div class="btn btn-primary" onclick="del_stick(this)" data-rkey="'+tmp[i].right_key+'" data-lkey="'+tmp[i].left_key+'" >✖</div>';
-        }
+        str += '<div class="btn btn-primary" onclick="del_stick(this)" data-rkey="'+tmp[i].right_key+'" data-lkey="'+tmp[i].left_key+'" >✖</div>';
         str += '</div>';
         $('#tree').append(str);
-        // adds(tmp, i);
+        adds(tmp, i);
 
       }
-      $('.add').click(function () {
-        var api = {
-          "api": {
-            "token":"1234",
-            "ctrl":"add",
-            "route":"tree",
-            "right_key":$(this).data('rkey'),
-            "left_key":$(this).data('lkey'),
-            "level":$(this).data('lvl'),
-            "name":"Новый элемент"
-          }
-        };
-        $.ajax({
-          type: "POST",
-          url: "/api",
-          data: JSON.stringify(api),
-          dataType: "json",
-          contentType: "application/json",
-          success: function(data){
-              location.reload();
-              }
-          });
-      });
-      $('.remove').click(function () {
-        var api = {
-          "api": {
-            "token":"1234",
-            "ctrl":"del",
-            "route":"tree",
-            "right_key":$(this).data('rkey'),
-            "left_key":$(this).data('lkey'),
-          }
-        };
-        $.ajax({
-          type: "POST",
-          url: "/api",
-          data: JSON.stringify(api),
-          dataType: "json",
-          contentType: "application/json",
-          success: function(data){
-              location.reload();
-              }
-          });
-      });
     }
   });
 });
@@ -152,6 +92,7 @@ function add_stick(elem) {
   });
 };
 
+
 function adds(tmp, i) {
   if (!tmp[i+1]) {
     var b = 0;
@@ -171,6 +112,27 @@ function adds(tmp, i) {
       str2 += '<div class="btn btn-primary"></div>';
     };
     str2 += '<div class="btn btn-primary" onclick="add_stick(this)" data-key="'+right_key+'" data-level="'+level+'" data-name="'+name+'">Добавить город</div>';
+    str2 += '</div>';
+    $('#tree').append(str2);
+    var str2 = '<div class="form-group">';
+    for (var k = 0; k < tmp[i].level-2; k++) {
+      str2 += '<div class="btn btn-primary"></div>';
+    };
+    str2 += '<div class="btn btn-primary" onclick="add_stick(this)" data-key="'+right_key+'" data-level="'+level+'" data-name="Новая Область">Новая Область</div>';
+    str2 += '</div>';
+    $('#tree').append(str2);
+    var str2 = '<div class="form-group">';
+    for (var k = 0; k < tmp[i].level-3; k++) {
+      str2 += '<div class="btn btn-primary"></div>';
+    };
+    str2 += '<div class="btn btn-primary" onclick="add_stick(this)" data-key="'+right_key+'" data-level="'+level+'" data-name="Новый ФО">Новый ФО</div>';
+    str2 += '</div>';
+    $('#tree').append(str2);
+    var str2 = '<div class="form-group">';
+    for (var k = 0; k < tmp[i].level-4; k++) {
+      str2 += '<div class="btn btn-primary"></div>';
+    };
+    str2 += '<div class="btn btn-primary" onclick="add_stick(this)" data-key="'+right_key+'" data-level="'+level+'" data-name="Новая Страна">Новая Страна</div>';
     str2 += '</div>';
     $('#tree').append(str2);
   }else {
@@ -195,8 +157,30 @@ function adds(tmp, i) {
         str2 += '<div class="btn btn-primary" onclick="add_stick(this)" data-key="'+right_key+'" data-level="'+level+'" data-name="'+name+'">Добавить город</div>';
         str2 += '</div>';
         $('#tree').append(str2);
+        var str2 = '<div class="form-group">';
+        for (var k = 0; k < tmp[i].level-2; k++) {
+          str2 += '<div class="btn btn-primary"></div>';
+        };
+        str2 += '<div class="btn btn-primary" onclick="add_stick(this)" data-key="'+right_key+'" data-level="'+level+'" data-name="Новая Область">Новая Область</div>';
+        str2 += '</div>';
+        $('#tree').append(str2);
       }
     }
+    if (tmp[i].level == 3) {
+      if (tmp[i].level >= tmp[i+1].level) {
+        var right_key = tmp[i].right_key;
+        var name = 'Новая ветка';
+        var level = tmp[i].level;
+        var str2 = '<div class="form-group">';
+        for (var k = 0; k < tmp[i].level-1; k++) {
+          str2 += '<div class="btn btn-primary"></div>';
+        };
+        str2 += '<div class="btn btn-primary" onclick="add_stick(this)" data-key="'+right_key+'" data-level="'+level+'" data-name="'+name+'">Добавить город</div>';
+        str2 += '</div>';
+        $('#tree').append(str2);
+      }else {
 
+      }
+    }
   }
 }

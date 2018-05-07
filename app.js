@@ -32,6 +32,7 @@ app.get('/', function (req, res, next) {
   console.log(req.session);
   if (req.session.auth == true) {
     res.render('index',{
+      type: 1,
       content:'news'
     });
   }else {
@@ -44,7 +45,8 @@ app.get('/', function (req, res, next) {
 app.get('/:params/:phone', function (req, res, next) {
   console.log(req.session);
   if (req.session.auth == true) {
-    res.render('index0',{
+    res.render('index',{
+      type: 2,
       content:req.params["params"],
       phone: req.params["phone"]
     });
@@ -63,6 +65,7 @@ app.get('/:params', function (req, res, next) {
     console.log('Открыта страница: '+req.params["params"]);
     if (req.session.auth == true) {
       res.render('index',{
+        type: 1,
         content:req.params["params"],
         phone: req.session.phone
       });
@@ -91,6 +94,7 @@ app.post('/api', jsonParser, function (req, res) {
         req.session.phone = 0;
         res.json(req.session);
       }else {
+        console.log(ansver);
         res.json(ansver);
       }
     });

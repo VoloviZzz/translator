@@ -25,7 +25,7 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function(data){
         console.log(data);
-        document.location = "/logged/profile."+data.ansver.phone;
+        document.location = "/profile";
           }
       });
   });
