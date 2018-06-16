@@ -49,7 +49,7 @@ function JSUploader() {
                         console.log(response.text.path);
                         var tmp = response.text.path.split('/');
                         $('#first_photo').remove();
-                        $('#uploadFiles_label').after('<img id="first_photo" onclick="$(\'#uploadFiles\').click()" src="/uploads/'+tmp[3]+'">');
+                        $('#uploadFiles_label').append('<img id="first_photo" onclick="open_coq()" src="/uploads/'+tmp[3]+'">');
                         $('#uploadFiles_BTN').remove();
                     }
                     else {

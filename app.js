@@ -1,24 +1,45 @@
-var express = require('express');
-var session = require('express-session');
-var SessionStore = require('express-mysql-session');
-var http = require('http');
-var connect = require('connect');
-var path = require('path');
-var app = express();
-fs = require("fs"),
-multiparty = require('multiparty');
-var bodyParser = require("body-parser");
-var jsonParser = bodyParser.json();
+var express                    = require('express');
+var session                    = require('express-session');
+var SessionStore               = require('express-mysql-session');
+var http                       = require('http');
+var connect                    = require('connect');
+var path                       = require('path');
+var app                        = express();
+var fs                         = require("fs");
+// var gm                         = require('gm').subClass({imageMagick: true});
+multiparty                     = require('multiparty');
+var bodyParser                 = require("body-parser");
+var jsonParser                 = bodyParser.json();
+
+// var token                      = "328328499:AAHVENfgDHuxI2b9IIcz-E6rXVD0c-HmjSc";
+// const TelegramBot = require('node-telegram-bot-api')
+// const Agent = require('socks5-https-client/lib/Agent')
+//
+// const bot = new TelegramBot(token, {
+// 	polling: true,
+// 	request: {
+// 		agentClass: Agent,
+// 		agentOptions: {
+// 			socksHost: '127.0.0.1',
+// 			socksPort: '9050'
+// 			// If authorization is needed:
+// 			// socksUsername: process.env.PROXY_SOCKS5_USERNAME,
+// 			// socksPassword: process.env.PROXY_SOCKS5_PASSWORD
+// 		}
+// 	}
+// })
 
 app.engine('ejs', require('ejs-locals'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-var api = require('./api');
 
-const mysql = require("mysql");
-const dbSettings = require("./db_settings.js");
-const config = require("./config.js");
-const connection = mysql.createConnection(dbSettings);
+var api                        = require('./api');
+const mysql                    = require("mysql");
+const dbSettings               = require("./db_settings.js");
+const config                   = require("./config.js");
+const connection               = mysql.createConnection(dbSettings);
+var io												 = require('socket.io').listen(3007);
+
 connection.connect();
 
 app.use(express.static(__dirname + '/client'));
@@ -27,6 +48,41 @@ app.use(session({
     secret: 'session_cookie_secret',
     store: new SessionStore(dbSettings)
 }));
+
+
+
+
+
+// var messageOptions = {
+//     parse_mode: "HTML",
+//     disable_web_page_preview: false,
+//     reply_markup: JSON.stringify({
+//         inline_keyboard: [[{
+//             text: 'Название кнопки',
+//             callback_data: 'do_something'
+//         }]]
+//     })
+// }
+
+
+io.sockets.on('connection', function (client) {
+    client.on('message', function (message) {
+        try {
+            client.emit('message', message);
+            client.broadcast.emit('message', message);
+        } catch (e) {
+            console.log(e);
+            client.disconnect();
+        }
+    });
+		client.on('disconnect', function() {
+				var time = (new Date).toLocaleTimeString();
+				io.sockets.json.send({'event': 'userSplit', 'name': ID, 'time': time});
+			});
+
+});
+
+
 
 app.get('/', function (req, res, next) {
   console.log(req.session);
@@ -37,7 +93,7 @@ app.get('/', function (req, res, next) {
     });
   }else {
     res.render('logged',{
-      content:'login'
+      content:'news0'
     });
   }
 });
@@ -57,6 +113,10 @@ app.get('/:params/:phone', function (req, res, next) {
   }
 });
 
+
+
+
+
 app.get('/:params', function (req, res, next) {
   console.log(req.session);
   if (req.params["params"] == 'api') {
@@ -73,6 +133,18 @@ app.get('/:params', function (req, res, next) {
       if (req.params["params"] == 'password') {
         res.render('logged',{
           content:'password'
+        });
+      }else if (req.params["params"] == 'photo') {
+        res.render('logged',{
+          content:'photo'
+        });
+      }else if (req.params["params"] == 'news0') {
+        res.render('logged',{
+          content:'news0'
+        });
+      }else if (req.params["params"] == 'chat') {
+        res.render('logged',{
+          content:'chat'
         });
       }else {
         res.render('logged',{
@@ -101,19 +173,25 @@ app.post('/api', jsonParser, function (req, res) {
 });
 
 app.post('/', function(req, res, next) {
+  console.log(req);
+  console.log('///----');
     // создаем форму
     var form = new multiparty.Form();
     //здесь будет храниться путь с загружаемому файлу, его тип и размер
     var uploadFile = {uploadPath: '', type: '', size: 0};
     //максимальный размер файла
-    var maxSize = 2 * 1024 * 1024; //2MB
+    var maxSize = 20 * 1024 * 1024; //20MB
     //поддерживаемые типы(в данном случае это картинки формата jpeg,jpg и png)
     var supportMimeTypes = ['image/jpg', 'image/jpeg', 'image/png'];
     //массив с ошибками произошедшими в ходе загрузки файла
     var errors = [];
+    form.keepExtensions = false;
+    form.type = 'multipart/form-data';
+    form.multiples = true;
 
      //если произошла ошибка
     form.on('error', function(err){
+      console.log(err);
         if(fs.existsSync(uploadFile.path)) {
             //если загружаемый файл существует удаляем его
             fs.unlinkSync(uploadFile.path);
@@ -122,6 +200,7 @@ app.post('/', function(req, res, next) {
     });
 
     form.on('close', function() {
+      console.log('close');
         //если нет ошибок и все хорошо
         if(errors.length == 0) {
             //сообщаем что все хорошо

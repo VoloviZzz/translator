@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "evroservis-194919",
+  "private_key_id": "603dce0221202f858916e20600583fe99621645c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC8KNuAXRhLni3K\nUEHVUd1g5a7HPOo8HTh2cBhGq9DjTNSgzeeGuqqRDbYG43oizduSmbaDUSEsI+JN\nfzzcE76ynAs96ikD7WuDPd9t1sF3/DX4ThwJ3zNqMdZhqq5aNEFj14DKpVsdZXjh\n02ZpYO0rdYPBk+ElkVY6TIYwUATVz4xokXK/whlJRS2O8bX/+9bwrdrDJFib1TjB\njM7ebyk1Hvjo4YnxIMtos9boU/BoJatLsByxRlLjDlL8nRKN4xAlqSwLlOGruRiE\nlsutJh6ZslJJyUByGCcgPrjyzPLzun1/DZ+f2z4e4RWHpT3RGoG/s+4uqcGDtaLO\nQpX2DdULAgMBAAECggEAQZYMTQYmPdV5KJgpGm5auDfXYGN/UkztLXuNOrURLunN\nA/BBz9ipM76PwH7yR8dxzfv+fm99HKG1dEXxtNS9GA0EbiR8/312iFy80NCWx3gG\nZ/LyGw7OISoWDB0ugQrN8DtiDUDuLaT9KdpCTGEYypk/v+4IAMxUPiYGcDi0NsJ0\nbR3V9ucp8jkJcXpnQFCHo4fIyG/fwS80OfGu/AJsKlnXZFyZIQATJxIXft7cKWLY\nahVGzgr1H6eDaSsNa4wmdD/wbTAd4tknGxVUr52iZBRrtqRtkmqTTt8La51qPFl7\nZMctrnMtEjb11e5QK7kSXKy93RSm9v141wWVxWJHYQKBgQDo1il+uSlcmdVn8Hhk\nCp4h8SydzIXrwJxjqALSZ2WcOxRvuNAQHNIcwvB4oSRUMXjt09xsK2XyOul6zygs\n8XoljDScUwfG4WPm4s7bolAgI5KyjyuOFr+7IDK2eqrErJAa15XCf3j7XWqPOWAk\npR7LAwejkCuy2VQ9BdBkIGduxwKBgQDO4N7i5OAAIe7bVNOuROOxGPjrYMJIoBBL\nSt7rrmGhofsYpn+Bp+qVpPE9uUk3cUXvNtr8dydkFEGtimXOc6VGOAWnpS4sjY9P\nniUtiF3tlnTLlD5ZkeWPFSIsN5M17GWDcPngM4PLukpe5NaIz1v56UjiYPaX4ZnV\nzAy+u8jznQKBgQDVRm7l/Det8d9wAO5WPP+SebbzqEc3psvZ4SkMj9ecXuWeXLyB\nNdUksU/SP1DmqhZqSzlKAAq28k2xx5W2bU8Em8QJOWkTPJvk/vaaarhYaB1U4B32\nXlIr1xd83SoVUzgAzl8ItPkdzvjvzo+JoZJuRQ03PrU4cyhdaTj0rlXwOwKBgQCi\netqTOU70y7HdcXIPnOt3XDWkKApvH8esWtFaKUtktuOPKLVcD5Wekj0mTS/D66MR\njfPP9YVqhL5QnjH3Q7y6uaU3VfQ96bB0x7BLYp7iyxhQC84savnwtphwQfXMlC3m\nXgTioZMRnu5qOTCFotaKIT6tDZqfDwDTeb9IzhO1wQKBgQDHdSaBD/RPQR9Eiqfp\nER2B9gAyDezKwDtMKexyfjzskSsbM9nw6vASrimB0X3DSi2cSSTmPaXW7SylVxQ3\nw7l5GaUMyXLLe5mJLxRdya5PU1jKG5b6cvZkbmrwewYJlcTbgmPixeChs+GG/G4E\nQKy/bWkYPUZcLZ0xvVeX3YfWjg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-cdubgj@evroservis-194919.iam.gserviceaccount.com",
+  "client_id": "108199924440272769503",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-cdubgj%40evroservis-194919.iam.gserviceaccount.com"
+}

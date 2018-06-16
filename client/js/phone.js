@@ -22,7 +22,7 @@ $(document).ready(function () {
                   }
                   str += '  >';
                   str += '  <td class="text-left">'+data.ansver[i].id+'</td>';
-                  str += '  <td class="text-left">'+data.ansver[i].product+' '+data.ansver[i].brand+'</td>';
+                  str += '  <td class="text-left">'+data.ansver[i].brand+' '+data.ansver[i].product+'</td>';
                   str += '  <td class="text-right" >'+data.ansver[i].token+'</td>';
                   str += '  <td class="text-right" >'+data.ansver[i].os+'</td>';
                   str += '  <td class="text-right" >'+data.ansver[i].ip+'</td>';

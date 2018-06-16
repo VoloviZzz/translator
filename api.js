@@ -1,88 +1,168 @@
-const mysql = require("mysql");
-const dbSettings = require("./db_settings.js");
-const connection = mysql.createConnection(dbSettings);
-var SMSru = require('sms_ru');
-var sms = new SMSru('A255981B-8EBA-9FD1-FE18-F33A33DEDDCB');
+var mysql               = require("mysql");
+var dbSettings          = require("./db_settings.js");
+var connection          = mysql.createConnection(dbSettings);
+var fs                  = require("fs");
+var gm                  = require('gm').subClass({imageMagick: true});
+var SMSru               = require('sms_ru');
+var sms                 = new SMSru('A255981B-8EBA-9FD1-FE18-F33A33DEDDCB');
+
+var Translate           = require('@google-cloud/translate');
+
+var translate           = new Translate({
+                              projectId: '749953301684-al7u9suohogghiq5v5fd3dqar1485bnt.apps.googleusercontent.com',
+                              keyFilename: 'client/uploads/Evroservis-325c83649cb7.json',
+                              key: 'AIzaSyCpq7hBlHzh3JJ3mNPxwbrnOKrAldQEUv4'
+                            });
+
+var vision                = require('@google-cloud/vision');
+
+var client                = new vision.ImageAnnotatorClient({
+                              projectId: '749953301684-al7u9suohogghiq5v5fd3dqar1485bnt.apps.googleusercontent.com',
+                              keyFilename: 'client/uploads/Evroservis-325c83649cb7.json',
+                              key: 'AIzaSyCpq7hBlHzh3JJ3mNPxwbrnOKrAldQEUv4'
+                            });
+
+var dialogflow             = require('dialogflow');
+var sessionClient          = new dialogflow.SessionsClient({
+                              keyFilename: 'client/uploads/Small-Talk-7aad6900b3bd.json',
+                            });
+var projectId              = 'small-talk-2110b';
+var sessionId              = '7aad6900b3bdadeb88e46f8cbd9215db1b005dce';
+
+var sessionPath            = sessionClient.sessionPath(projectId, sessionId);
+
+var query = 'Привет';
+var languageCode = 'ru';
+// The text query request.
+var request = {
+  session: sessionPath,
+  queryInput: {
+    text: {
+      text: query,
+      languageCode: languageCode,
+    },
+  },
+};
+
 connection.connect();
-
-
 var func = {};
 exports.ctrl = function (mess, func) {
-    var sql = "SELECT * FROM phone WHERE token = '"+mess.token+"'";
-    connection.query(sql, function(err, rows, fields){
-        if(err) return console.log(err);
-        if (rows.length == 0) {
-          var ansver = {
-            status : "bed",
-            ansver : "Ooops, this token is not exist!"
+  if(mess.route == 'LADA'){
+    if (mess.ctrl == 'send') {
+
+      var query = mess.text;
+      var languageCode = 'ru';
+
+      var request = {
+        session: sessionPath,
+        queryInput: {
+          text: {
+            text: query,
+            languageCode: languageCode,
+          },
+        },
+      };
+
+      sessionClient
+        .detectIntent(request)
+        .then(responses => {
+          console.log('Detected intent');
+          const result = responses[0].queryResult;
+          console.log(`  Query: ${result.queryText}`);
+          console.log(`  Response: ${result.fulfillmentText}`);
+          if (result.fulfillmentText) {
+            var ansver = {
+              status : "ok",
+              ansver : result.fulfillmentText
+            };
+            func(ansver);
+          }else {
+            var ansver = {
+              status : "bed",
+              ansver : 'Ох, ты что-то мутный, парень. Не понимаю.'
+            };
+            func(ansver);
           }
+
+          if (result.intent) {
+            console.log(`  Intent: ${result.intent.displayName}`);
+          } else {
+            console.log(`  No intent matched.`);
+          }
+        })
+        .catch(err => {
+          console.error('ERROR:', err);
+        });
+
+
+
+    }
+  }else if(mess.route == 'news'){
+    if (mess.ctrl == 'get') {
+      var row = [];
+      var sql = "SELECT * FROM news ORDER BY id DESC";
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          for (var i = 0; i < rows.length; i++) {
+            var body = rows[i].body;
+            var body = body.replace(/"/g, "'");
+            var tmp = {
+              id : rows[i].id,
+              title : rows[i].title,
+              photo : rows[i].photo,
+              body : body
+            };
+            // console.log(tmp);
+            row.push(tmp);
+          }
+          var ansver = {
+            status : "ok",
+            ansver : row
+          };
           func(ansver);
-        }else if(mess.route == 'news'){
-      if (mess.ctrl == 'get') {
-        var row = [];
-        var sql = "SELECT * FROM news ORDER BY id DESC";
-        connection.query(sql, function(err, rows, fields){
-            if(err) return console.log(err);
-            for (var i = 0; i < rows.length; i++) {
-              var body = rows[i].body;
-              var body = body.replace(/"/g, "'");
-              var tmp = {
-                id : rows[i].id,
-                title : rows[i].title,
-                photo : rows[i].photo,
-                body : body
-              };
-              // console.log(tmp);
-              row.push(tmp);
-            }
-            var ansver = {
-              status : "ok",
-              ansver : row
-            };
-            func(ansver);
-        });
-      }else if (mess.ctrl == 'add') {
-        var sql = "INSERT INTO news SET title = '"+mess.title+"', photo = '"+mess.photo+"', body = '"+mess.body+"'";
-        connection.query(sql, function(err, rows, fields){
-            if(err) return console.log(err);
-            var ansver = {
-              status : "ok",
-              ansver : "Added news"
-            };
-            func(ansver);
-        });
-      }else if (mess.ctrl == 'del') {
-        var sql = "DELETE FROM news WHERE id = "+mess.id+"";
-        connection.query(sql, function(err, rows, fields){
-            if(err) return console.log(err);
-            var ansver = {
-              status : "ok",
-              ansver : "removed news"
-            };
-            func(ansver);
-        });
-      }else if (mess.ctrl == 'get_one') {
-        var sql = "SELECT * FROM news WHERE id = "+mess.id+" LIMIT 1";
-        connection.query(sql, function(err, rows, fields){
-            if(err) return console.log(err);
-            var ansver = {
-              status : "ok",
-              ansver : rows
-            };
-            func(ansver);
-        });
-      }else if (mess.ctrl == 'set') {
-        var sql = "UPDATE news SET title = '"+mess.title+"', photo = '"+mess.photo+"', body = '"+mess.body+"' WHERE id = "+mess.id;
-        connection.query(sql, function(err, rows, fields){
-            if(err) return console.log(err);
-            var ansver = {
-              status : "ok",
-              ansver : rows
-            };
-            func(ansver);
-        });
-      }
-    }else if (mess.route == 'tree') {
+      });
+    }else if (mess.ctrl == 'add') {
+      var sql = "INSERT INTO news SET title = '"+mess.title+"', photo = '"+mess.photo+"', body = '"+mess.body+"'";
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : "Added news"
+          };
+          func(ansver);
+      });
+    }else if (mess.ctrl == 'del') {
+      var sql = "DELETE FROM news WHERE id = "+mess.id+"";
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : "removed news"
+          };
+          func(ansver);
+      });
+    }else if (mess.ctrl == 'get_one') {
+      var sql = "SELECT * FROM news WHERE id = "+mess.id+" LIMIT 1";
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : rows
+          };
+          func(ansver);
+      });
+    }else if (mess.ctrl == 'set') {
+      var sql = "UPDATE news SET title = '"+mess.title+"', photo = '"+mess.photo+"', body = '"+mess.body+"' WHERE id = "+mess.id;
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          var ansver = {
+            status : "ok",
+            ansver : rows
+          };
+          func(ansver);
+      });
+    }
+  }else if (mess.route == 'tree') {
       if (mess.ctrl == 'get') {
         var sql = "SELECT * FROM my_tree ORDER BY left_key";
         connection.query(sql, function(err, rows, fields){
@@ -401,6 +481,84 @@ exports.ctrl = function (mess, func) {
             }
         });
       }
+    }else if(mess.route == 'photo'){
+      if (mess.ctrl == 'crop') {
+        var tmp = mess.img.split('.');
+        var resize_photo = tmp[0]+'_resize_'+mess.num+'.'+tmp[1];
+        gm('client'+mess.img)
+          .resize(mess.edited_width, mess.edited_height)
+          .crop(mess.width, mess.height, mess.x1, mess.y1)
+          .noProfile()
+          .write('client'+resize_photo, function (err) {
+            if (!err){
+              var ansver = {
+                status : "ok",
+                ansver : resize_photo
+              };
+              console.log('done');
+              func(ansver);
+            }else{
+              console.log(err);
+            }
+          });
+
+      }else if (mess.ctrl == 'detection_one') {
+        client
+          .documentTextDetection('client'+mess.img)
+          .then(results => {
+            fullTextAnnotation = results[0].fullTextAnnotation;
+            var ansver = {
+              status : "ok",
+              ansver : fullTextAnnotation
+            };
+            func(ansver);
+          })
+          .catch(err => {
+            console.error('ERROR:', err);
+          });
+      }else if (mess.ctrl == 'translate') {
+
+         translate
+          .translate(mess.text, mess.target)
+          .then(results => {
+            let translations = results[0];
+            translations = Array.isArray(translations)
+              ? translations
+              : [translations];
+
+              var ansver = {
+                status : "ok",
+                ansver : translations
+              };
+              func(ansver);
+
+          })
+          .catch(err => {
+            console.error('ERROR:', err);
+          });
+
+      }else if (mess.ctrl == 'file') {
+
+          var rand = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+
+
+        fs.writeFile("client/uploads/f"+rand+".docx", ' '+mess.text, function(err) {
+            if(err) throw err;
+            var ansver = {
+              status : "ok",
+              ansver : rand
+            };
+            func(ansver);
+        });
+
+      }else {
+        var ansver = {
+          status : "bed",
+          ansver : mess
+        };
+        func(ansver);
+
+      }
     }else {
       var ansver = {
         status : "bed total",
@@ -408,7 +566,6 @@ exports.ctrl = function (mess, func) {
       };
       func(ansver);
     }
-  });
 }
 
 
