@@ -18,7 +18,7 @@ var vision                = require('@google-cloud/vision');
 
 var client                = new vision.ImageAnnotatorClient({
                               projectId: '749953301684-al7u9suohogghiq5v5fd3dqar1485bnt.apps.googleusercontent.com',
-                              keyFilename: 'client/uploads/Evroservis-325c83649cb7.json',
+                              keyFilename: 'client/uploads/LadaTranslate-721527b91fb8.json',
                               key: 'AIzaSyCpq7hBlHzh3JJ3mNPxwbrnOKrAldQEUv4'
                             });
 

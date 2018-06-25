@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ladatranslate",
+  "private_key_id": "721527b91fb80c5fdc769a95aca7ab072858fa4c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCuDNj1C3ZrOjoh\n3K0DyWuWNRN64u26fIp+1WU1Ll/sB2zySv1bUkPBfeXQxtIbNsVb+xm/k08Gka8B\nkiflb1Pu7LFuMC4NkyxY4dvrXLzEAGYsqvwekX0eqwkv6ybY6fq04WHOII3+DL4K\nN1QF6OM0aVGqBII45t7QKzS4OQdQ+rXsQX/F8qTfs1ob4Bc5b5i0g0/XlKQ1vSgl\ndEoqENKR/ib28ViBSBWw+au5syoiF2LZwV1myFmpRA0+5bJPpjK57bzvsQJfyb+F\nRCKiVZgJRT3K7IOoR6yTW+g21HIgGmpWvyOKeyxvQ36spdYPbwQFKJQfLeKi0aik\n4iZh5rC7AgMBAAECggEAKNp9Jm+NWTfuozogJk5mAXjt3J9de7N18rV2Lxh2jXlk\nui6d74yMuOMrSWkRsi+V/bQf5BbYqssRUAYVdUY/ZkqKjzmh5a/Q7f/91e4LpNoP\nIZb03Nv7iXJOEsBYevvYzBJHGdIMYkBtbwpzn3t9sTSzZXvvcRnH3Qb3NfK04+3B\nPTBs6SjxEDSpt0Q5I4IFRelFh/BS+RvtVOD0wbSA6M/gjeO3Jw1w3yFj+vlfZ9aX\nsaeVoLl1VqBp1r0zoES7KI2ngv+WLa6WBAoXIZC6EHc03/oKxnf2/Y48E+cfDsnu\n2rSLefzXbDJ9PdNASJYd/gPGVUBFQNrrcH5YoezLUQKBgQDxiJPKxlH+gScaJaZH\nrfJHLrGE7jcbc88ZNzwUaId+kvYfPrz7wOIBS1wlkuo8Bk1I8jdOB94y4e12siJU\nSIN3B0KjJjGbe/93rhBB27r/8cQYMu0QA5ZJD1K+LQ5sf0o9EEVy9ag4KrJSBCu9\nhc9Iz4VkToAzSnWV4pfcpCNcWQKBgQC4eY0nc2PWVBFvYBXCCUgm1nkVsjNMhhrA\nL14Ca/5Xt/3F0nXyXV7Xfso4z60VB7PxMdLL4iImYLq2tz+1Vtw/j/kzCdVA9XNy\n8vFTKQaJ5KjQqviIa5215oBTQetiJCIktffqFhvFiYPrmayaC99LCr0opGJ9N9a8\nFPQMZTBDMwKBgQDfNKv/tA6J96i/DRQBIcrH5Wq/wbTDdd5pGxY2dfLhEcbJUR0s\nOi+hqpbZUk+McPZy9wQM5FB/DTJ5gl0fLnPvR5JZWy501b5cR0tW0Uyawj3JbyaM\nqgP0OGjqvpCZy3g7vhGwDz0JystH5/rUBhhs3PoUnEb1H1ZS0Tgt+rGC4QKBgHEA\nPEALRf/XNWrlD87xQppPzJJGu3fHugE5wrt3DbEMCs6v8gIJwfv9NcCBLoPwWQCJ\nRZgQqFyb6iPcspDRaU8iUUM7Zb9J23Nxb/RB8Dhtsh9Ia7+dNFllnfviKF7QxX15\nXiitbEufxgh+9STT2u8r391SfOY5WzeRGkGxhlPTAoGBANNxke0tHOnDSNXAs5BK\nVknNMdEnSB3GWm2I9B4/adsTC9eaBApm5qGyxosdsrn/iMsvuECAjZPwLucuJCEf\nIUj/GrnHOM+UCO5egWfgD8b/0Y8ed/oZXgzf1Ox0yEOKsshV2IDulZ2e3e0sYYry\nk8En1NeQRpF2coUB8f2EeQX4\n-----END PRIVATE KEY-----\n",
+  "client_email": "ladatranslate-383@ladatranslate.iam.gserviceaccount.com",
+  "client_id": "104319976617634114116",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ladatranslate-383%40ladatranslate.iam.gserviceaccount.com"
+}
