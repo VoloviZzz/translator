@@ -10,8 +10,8 @@ var Translate           = require('@google-cloud/translate');
 
 var translate           = new Translate({
                               projectId: '749953301684-al7u9suohogghiq5v5fd3dqar1485bnt.apps.googleusercontent.com',
-                              keyFilename: 'LadaTranslate-721527b91fb8.json',
-                              key: '721527b91fb80c5fdc769a95aca7ab072858fa4c'
+                              keyFilename: 'client/uploads/LadaTranslate-721527b91fb8.json',
+                              key: 'AIzaSyBkiGjZsaMyoOMggg1fUA2jaCtBvAbNuM0'
                             });
 
 var vision                = require('@google-cloud/vision');
@@ -19,7 +19,7 @@ var vision                = require('@google-cloud/vision');
 var client                = new vision.ImageAnnotatorClient({
                               projectId: '749953301684-al7u9suohogghiq5v5fd3dqar1485bnt.apps.googleusercontent.com',
                               keyFilename: 'client/uploads/LadaTranslate-721527b91fb8.json',
-                              key: '721527b91fb80c5fdc769a95aca7ab072858fa4c'
+                              key: 'AIzaSyBkiGjZsaMyoOMggg1fUA2jaCtBvAbNuM0'
                             });
 
 var dialogflow             = require('dialogflow');
@@ -27,7 +27,7 @@ var sessionClient          = new dialogflow.SessionsClient({
                               keyFilename: 'client/uploads/Small-Talk-7aad6900b3bd.json',
                             });
 var projectId              = 'small-talk-2110b';
-var sessionId              = '7aad6900b3bdadeb88e46f8cbd9215db1b005dce';
+var sessionId              = 'AIzaSyBkiGjZsaMyoOMggg1fUA2jaCtBvAbNuM0';
 
 var sessionPath            = sessionClient.sessionPath(projectId, sessionId);
 
