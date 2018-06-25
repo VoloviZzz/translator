@@ -10,8 +10,8 @@ var Translate           = require('@google-cloud/translate');
 
 var translate           = new Translate({
                               projectId: '749953301684-al7u9suohogghiq5v5fd3dqar1485bnt.apps.googleusercontent.com',
-                              keyFilename: 'client/uploads/Evroservis-325c83649cb7.json',
-                              key: 'AIzaSyCpq7hBlHzh3JJ3mNPxwbrnOKrAldQEUv4'
+                              keyFilename: 'LadaTranslate-721527b91fb8.json',
+                              key: '721527b91fb80c5fdc769a95aca7ab072858fa4c'
                             });
 
 var vision                = require('@google-cloud/vision');
@@ -19,7 +19,7 @@ var vision                = require('@google-cloud/vision');
 var client                = new vision.ImageAnnotatorClient({
                               projectId: '749953301684-al7u9suohogghiq5v5fd3dqar1485bnt.apps.googleusercontent.com',
                               keyFilename: 'client/uploads/LadaTranslate-721527b91fb8.json',
-                              key: 'AIzaSyCpq7hBlHzh3JJ3mNPxwbrnOKrAldQEUv4'
+                              key: '721527b91fb80c5fdc769a95aca7ab072858fa4c'
                             });
 
 var dialogflow             = require('dialogflow');
