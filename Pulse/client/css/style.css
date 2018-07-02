@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+body {
+  margin: 0;
+font-family: 'Montserrat', sans-serif;
+}
+.tap_to_start{
+  position: fixed;
+  width: 100%;
+  height:100%;
+  z-index: 1000;
+}
+.tap_to_start .fullsreen{
+  background-color: #0008;
+  width:100%;
+  height: 100%;
+}
+.tap_to_start .fullsreen_gameOver{
+  background-color: #0008;
+  width:100%;
+  height: 100%;
+}
+.fullsreen span{
+  position:absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-family: 'Montserrat', sans-serif;
+  color: #999;
+  font-size: 3.5em;
+  text-align:  center;
+}
+.fullsreen .width_line{
+  position:absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width:200px;
+  height: 10px;
+  background-color: #0008;
+  border-radius: 15px;
+  box-shadow: inset 0 0px 15px #000000;
+}
+
+.fullsreen .circul{
+  position:absolute;
+  top: 70%;
+  left: 30%;
+  transform: translate(-50%,-50%);
+  width: 50px;
+  height: 50px;
+  background-color: #353535;
+  border-radius: 50%;
+  box-shadow: inset 0 4px 16px #C40062;
+  animation: left-right  2s infinite ease-in-out;
+}
+
+@keyframes left-right {
+0% {left: 30%;}
+50% {left: 70%;}
+100% {left: 30%;}
+}
+
+
+.world {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: #e4e0b1;
+  box-shadow: inset 0 0 200px #000;
+}
+.world-night {
+  background-color: #4b4f8e;
+}
+
+.interface{
+  position: absolute;
+  top: 85%;
+  transform: translate(-50%,-50%);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color:#e9517c;
+  box-shadow: 0 4px 16px #C40062;
+  cursor: pointer;
+}
+
+.interface i{
+  position:absolute;
+  font-size:2em;
+  color: #f190ab;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+
+.score_table{
+  left: 50%;
+  top: 60%;
+  background-color:#87cbe4;
+  box-shadow: none;
+  border-radius: 0px;
+  font-size:5em;
+  width: 100%;
+}
+
+.score_table span{
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.score_table span1{
+  position:absolute;
+  top: 80%;
+  left: 1%;
+  transform: translate(-0%,-50%);
+  font-size:0.2em;
+}
+
+.reload{
+  width: 10rem;
+  height: 10rem;
+  left: 50%;
+  top: 30%;
+  font-size:3em;
+  background-color:#e4e0b1;
+  box-shadow: 0 4px 16px #e4e0b1;
+}
+
+.share{
+  left: 80%;
+}
+
+.players{
+  left: 50%;
+}
+
+.stat{
+  left: 20%;
+}
+
+.song{
+  left: 80%;
+}
+
+.score {
+  position: absolute;
+  top: 2%;
+  right: 14%;
+  font-size: 2.2em;
+  font-family: 'Montserrat', sans-serif;
+  color: #f1cd8969;
+}
+
+.points {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  font-size: 5em;
+  transform: translate(-50%,-0%);
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 0 4px 16px #000000;
+  color: #ffffff;
+}
+
+.toggle {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px #C40062;
+  background: #F8007E url('https://res.cloudinary.com/elliepooh/image/upload/v1491841750/sun_nyr4z3.svg') center center / 60% no-repeat;
+  cursor: pointer;
+}
+.toggle-night {
+  box-shadow: 0 4px 16px #626EC9;
+  background: #9A96E8 url('https://res.cloudinary.com/elliepooh/image/upload/v1491841746/star_u865qq.svg') center 46% / 60% no-repeat;
+}
+.toggle-music {
+  position: absolute;
+  top: 5rem;
+  left: 1rem;
+  width: 3rem;
+  height: 3rem;
+  background: url('https://res.cloudinary.com/elliepooh/image/upload/v1491889929/music_s7aiet.svg') center center / 60% no-repeat;
+  cursor: pointer;
+}
+.music-off {
+  background: url('https://res.cloudinary.com/elliepooh/image/upload/v1491890054/music-off_nrnsni.svg') center center / 60% no-repeat;
+}
